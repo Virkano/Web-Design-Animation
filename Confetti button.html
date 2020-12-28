@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confetti button</title>
+  </head>
+  <style>
+    body .socials {
+      position: fixed;
+      display: block;
+      left: 20px;
+      bottom: 20px;
+    }
+    body .socials > a {
+      display: block;
+      width: 30px;
+      opacity: 0.2;
+      transform: scale(var(--scale, 0.8));
+      transition: transform 0.3s cubic-bezier(0.38, -0.12, 0.24, 1.91);
+    }
+    body .socials > a:hover {
+      --scale: 1;
+    }
+    body {
+      align-items: center;
+      background: #ed4264; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+        to right,
+        #ed4264,
+        #ffedbc
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(
+        to right,
+        #ed4264,
+        #ffedbc
+      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      margin: 0;
+      width: 100vw;
+    }
+    .shadow {
+      position: absolute;
+      margin-top: 2px;
+    }
+    .hover {
+      border-radius: 50px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      cursor: pointer;
+      height: 100px;
+      position: absolute;
+      width: 100px;
+    }
+    .clip {
+      background-color: #fff;
+      border-radius: 50px;
+      clip-path: polygon(
+        0% 0%,
+        0% 52.447069%,
+        30.844539% 52.447%,
+        30.844539% 50.237396%,
+        30.844539% 48.027791%,
+        30.844539% 45.818186%,
+        30.844539% 43.608582%,
+        31.074905% 42.257032%,
+        31.65035% 40.866508%,
+        32.397397% 39.609496%,
+        33.142567% 38.658487%,
+        35.677378% 36.327021%,
+        39.127089% 33.663669%,
+        43.075878% 30.89027%,
+        47.107926% 28.228662%,
+        48.519882% 27.751201%,
+        50.433213% 27.58916%,
+        52.319085% 27.746871%,
+        53.648664% 28.228662%,
+        57.127578% 30.883904%,
+        60.932631% 33.942292%,
+        64.454458% 36.928097%,
+        67.083693% 39.365593%,
+        67.93372% 40.373944%,
+        68.477633% 41.419308%,
+        68.766519% 42.631058%,
+        68.851461% 44.138564%,
+        68.851461% 48.469673%,
+        68.851461% 52.800782%,
+        68.851461% 57.131891%,
+        68.851461% 61.463%,
+        68.394148% 63.593607%,
+        67.234211% 65.271838%,
+        65.689655% 66.371396%,
+        64.078489% 66.765981%,
+        62.752664% 66.765981%,
+        61.426839% 66.765981%,
+        60.101013% 66.765981%,
+        58.775188% 66.765981%,
+        57.551799% 66.396236%,
+        56.538683% 65.455904%,
+        55.848324% 64.198338%,
+        55.593208% 62.876894%,
+        55.593208% 61.595263%,
+        55.593208% 60.313632%,
+        55.593208% 59.032001%,
+        55.593208% 57.75037%,
+        55.372582% 56.844737%,
+        54.769169% 56.243166%,
+        53.870669% 55.909062%,
+        52.764781% 55.805826%,
+        51.262179% 55.805826%,
+        49.759577% 55.805826%,
+        48.256975% 55.805826%,
+        46.754373% 55.805826%,
+        45.512872% 56.016456%,
+        44.683926% 56.588476%,
+        44.22729% 57.432085%,
+        44.102723% 58.457477%,
+        44.119797% 59.641849%,
+        44.1179% 60.911742%,
+        44.108414% 62.368716%,
+        44.102723% 64.114331%,
+        43.898513% 65.255375%,
+        43.351924% 66.213805%,
+        42.562016% 66.873799%,
+        41.627849% 67.119535%,
+        40.257829% 67.119535%,
+        38.88781% 67.119535%,
+        37.517791% 67.119535%,
+        36.147771% 67.119535%,
+        34.388618% 66.605533%,
+        32.669023% 65.277485%,
+        31.362995% 63.456329%,
+        30.844539% 61.463%,
+        30.844539% 59.209%,
+        30.844539% 56.955%,
+        30.844539% 54.701%,
+        30.844539% 52.447%,
+        0% 52.447%,
+        0% 100%,
+        100% 100%,
+        100% 0%
+      );
+      height: 100px;
+      position: absolute;
+      width: 100px;
+    }
+    .hover:hover .clip {
+      background-color: #f8f8f8;
+    }
+    .hover:active {
+      margin-top: 2px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
+    }
+    .container {
+      clip-path: circle(40px at 45px 50%);
+      height: 90px;
+      overflow: hidden;
+      position: relative;
+      width: 90px;
+    }
+    #canvas {
+      left: 50px;
+      position: absolute;
+      top: 50px;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  </style>
+  <body>
+    <!--- ## CODEPEN + TWITTER ############# -->
+    <div class="socials">
+      <a class="dribbble" href="https://codepen.io/virkano" target="_blank">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          viewBox="0 0 32 32"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            fill="black"
+            d="M16 0C7.16703 0 0 7.16703 0 16C0 24.833 7.16703 32 16 32C24.8156 32 32 24.833 32 16C32 7.16703 24.8156 0 16 0ZM26.5683 7.37527C28.4772 9.70065 29.6226 12.6681 29.6573 15.8785C29.2061 15.7918 24.6941 14.872 20.1475 15.4447C20.0434 15.2191 19.9566 14.9761 19.8525 14.7332C19.5748 14.0738 19.2625 13.397 18.9501 12.7549C23.9826 10.7072 26.2733 7.75705 26.5683 7.37527ZM16 2.36009C19.4707 2.36009 22.6464 3.66161 25.0586 5.7961C24.8156 6.14317 22.7505 8.90239 17.8915 10.7245C15.6529 6.61171 13.1714 3.24512 12.7896 2.72451C13.8134 2.48156 14.8894 2.36009 16 2.36009ZM10.1866 3.64425C10.551 4.13015 12.9805 7.5141 15.2538 11.5401C8.86768 13.2408 3.22777 13.2061 2.62039 13.2061C3.50542 8.9718 6.36876 5.44902 10.1866 3.64425ZM2.32538 16.0174C2.32538 15.8785 2.32538 15.7397 2.32538 15.6009C2.9154 15.6182 9.54447 15.705 16.3644 13.6573C16.7636 14.4208 17.128 15.2017 17.4751 15.9826C17.3015 16.0347 17.1106 16.0868 16.9371 16.1388C9.89154 18.4121 6.14317 24.6247 5.8308 25.1453C3.6616 22.7332 2.32538 19.5228 2.32538 16.0174ZM16 29.6746C12.8416 29.6746 9.92625 28.5987 7.61822 26.7939C7.86117 26.2907 10.6377 20.9458 18.3427 18.256C18.3774 18.2386 18.3948 18.2386 18.4295 18.2213C20.3557 23.2017 21.1367 27.3839 21.3449 28.5813C19.6963 29.2928 17.8915 29.6746 16 29.6746ZM23.6182 27.3319C23.4794 26.4989 22.7505 22.5076 20.9631 17.5965C25.2495 16.9197 28.9978 18.0304 29.4664 18.1866C28.8764 21.987 26.6898 25.2668 23.6182 27.3319Z"
+            fill="#EA4C89"
+          ></path>
+        </svg>
+      </a>
+      <a class="twitter" href="https://twitter.com/kanozhao" target="_blank">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          viewBox="0 0 72 72"
+        >
+          <path
+            fill="black"
+            d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+    <div class="container">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="hover">
+      <svg
+        class="shadow"
+        xmlns="http://www.w3.org/2000/svg"
+        width="100"
+        height="100"
+        viewBox="0 0 100 100"
+      >
+        <defs>
+          <filter
+            id="a"
+            x="-.024"
+            width="1.048"
+            y="-.024"
+            height="1.048"
+            color-interpolation-filters="sRGB"
+          >
+            <feGaussianBlur stdDeviation="1" />
+          </filter>
+        </defs>
+        <path
+          d="M20 20v32.36h10.845v-8.837c0-1.7 1.383-3.963
+               2.298-4.95
+               2.585-2.79 8.72-7.055 13.965-10.43 1.314-.845 5.374-.86
+               6.54
+               0 4.15 3.06 10.796 8.464 13.436 11.137 1.36 1.377 1.768
+               2.508 1.768 4.773v17.324c0 3.086-2.722 5.303-4.773
+               5.303h-5.304c-1.722
+               0-3.182-2.197-3.182-3.89v-5.126c0-1.426-1.255-1.944-2.83-1.944h-6.01c-1.947
+               0-2.688 1.203-2.65 2.65.04 1.57 0 3.093 0 5.658 0
+               1.592-1.178 3.006-2.476 3.006h-5.48c-2.205
+               0-5.157-3.03-5.303-5.657V52.36H20V80h60V20z"
+          fill="#9eabb0"
+          fill-rule="evenodd"
+          stroke="#9eabb0"
+          filter="url(#a)"
+        />
+      </svg>
+      <div class="clip"></div>
+    </div>
+    <script>
+      // Little Canvas things
+      var canvas = document.querySelector("#canvas"),
+        ctx = canvas.getContext("2d");
+
+      // Set Canvas to be window size
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      // Configuration, Play with these
+      var config = {
+        particleNumber: 800,
+        maxParticleSize: 10,
+        maxSpeed: 10,
+        colorVariation: 50,
+      };
+
+      // Colors
+      var colorPalette = {
+        bg: { r: 237, g: 230, b: 236 },
+        matter: [
+          { r: 232, g: 123, b: 211 },
+          { r: 243, g: 151, b: 188 },
+          { r: 212, g: 105, b: 220 },
+          { r: 252, g: 217, b: 212 },
+        ],
+      };
+
+      // Some Variables hanging out
+      var particles = [],
+        centerX = canvas.width / 2,
+        centerY = canvas.height / 2,
+        drawBg,
+        // Draws the background for the canvas, because space
+        drawBg = function (ctx, color) {
+          ctx.fillStyle =
+            "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        };
+
+      // Particle Constructor
+      var Particle = function (x, y) {
+        // X Coordinate
+        this.x = x || Math.round(Math.random() * canvas.width);
+        // Y Coordinate
+        this.y = y || Math.round(Math.random() * canvas.height);
+        // Radius of the space dust
+        this.r = Math.ceil(Math.random() * config.maxParticleSize);
+        // Color of the rock, given some randomness
+        this.c = colorVariation(
+          colorPalette.matter[
+            Math.floor(Math.random() * colorPalette.matter.length)
+          ],
+          true
+        );
+        // Speed of which the rock travels
+        this.s = Math.pow(Math.ceil(Math.random() * config.maxSpeed), 0.7);
+        // Direction the Rock flies
+        this.d = Math.round(Math.random() * 360);
+      };
+
+      // Provides some nice color variation
+      // Accepts an rgba object
+      // returns a modified rgba object or a rgba string if true is passed in for argument 2
+      var colorVariation = function (color, returnString) {
+        var r, g, b, a, variation;
+        r = Math.round(
+          Math.random() * config.colorVariation -
+            config.colorVariation / 2 +
+            color.r
+        );
+        g = Math.round(
+          Math.random() * config.colorVariation -
+            config.colorVariation / 2 +
+            color.g
+        );
+        b = Math.round(
+          Math.random() * config.colorVariation -
+            config.colorVariation / 2 +
+            color.b
+        );
+        a = Math.random() + 0.5;
+        if (returnString) {
+          return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+        } else {
+          return { r, g, b, a };
+        }
+      };
+
+      // Used to find the rocks next point in space, accounting for speed and direction
+      var updateParticleModel = function (p) {
+        var a = 180 - (p.d + 90); // find the 3rd angle
+        p.d > 0 && p.d < 180
+          ? (p.x += (p.s * Math.sin(p.d)) / Math.sin(p.s))
+          : (p.x -= (p.s * Math.sin(p.d)) / Math.sin(p.s));
+        p.d > 90 && p.d < 270
+          ? (p.y += (p.s * Math.sin(a)) / Math.sin(p.s))
+          : (p.y -= (p.s * Math.sin(a)) / Math.sin(p.s));
+        return p;
+      };
+
+      // Just the function that physically draws the particles
+      // Physically? sure why not, physically.
+      var drawParticle = function (x, y, r, c) {
+        ctx.beginPath();
+        ctx.fillStyle = c;
+        ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+        ctx.fill();
+        ctx.closePath();
+      };
+
+      // Remove particles that aren't on the canvas
+      var cleanUpArray = function () {
+        particles = particles.filter((p) => {
+          return p.x > -100 && p.y > -100;
+        });
+      };
+
+      var initParticles = function (numParticles, x, y) {
+        for (let i = 0; i < numParticles; i++) {
+          particles.push(new Particle(x, y));
+        }
+        particles.forEach((p) => {
+          drawParticle(p.x, p.y, p.r, p.c);
+        });
+      };
+
+      let count = 0;
+      let id = null;
+
+      // Our Frame function
+      var frame = function () {
+        // Draw background first
+        drawBg(ctx, colorPalette.bg);
+        // Update Particle models to new position
+        particles.map((p) => {
+          return updateParticleModel(p);
+        });
+        // Draw em'
+        particles.forEach((p) => {
+          drawParticle(p.x, p.y, p.r, p.c);
+        });
+        // Play the same song? Ok!
+        if (++count < 100) {
+          id = window.requestAnimationFrame(frame);
+        }
+      };
+
+      const btn = document.querySelector(".hover");
+      // Click listener
+      btn.addEventListener("click", function (event) {
+        var x = event.clientX,
+          y = event.clientY;
+        cleanUpArray();
+        initParticles(config.particleNumber, x, y);
+        count = 0;
+        window.cancelAnimationFrame(id);
+        id = window.requestAnimationFrame(frame);
+      });
+
+      // First Frame
+      frame();
+
+      // First particle explosion
+      //initParticles(config.particleNumber);
+    </script>
+  </body>
+</html>
